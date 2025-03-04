@@ -10,8 +10,21 @@ function deleteLast() {
 }
 function calculate() {
     try {
-        document.getElementById('screen').value = eval(document.getElementById('screen').value);
+        let expression = document.getElementById('screen').value.replace(/\^/g, '**');
+        document.getElementById('screen').value = eval(expression);
     } catch {
         alert("Input tidak valid");
     }
 }
+document.addEventListener("keydown", function(event) {
+    let key = event.key;
+    if ((key >= '0' && key <= '9') || key === '.' || key === '+' || key === '-' || key === '*' || key === '/' || key === '%' || key === '^') {
+        appendValue(key);
+    } else if (key === 'Enter') {
+        calculate();
+    } else if (key === 'Backspace') {
+        deleteLast();
+    } else if (key === 'Escape') {
+        clearScreen();
+    }
+});
